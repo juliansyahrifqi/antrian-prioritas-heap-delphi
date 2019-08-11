@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, StdCtrls, ExtCtrls;
+  Dialogs, StdCtrls, ExtCtrls, MmSystem;
 
 const
   maksAntrian=100;
@@ -17,15 +17,20 @@ type
     meja2: TLabel;
     Label2: TLabel;
     Label3: TLabel;
-    Button1: TButton;
-    Button2: TButton;
-    Button3: TButton;
-    Button4: TButton;
+    Panggil1: TButton;
+    Panggil2: TButton;
+    AmbilPersonal: TButton;
+    AmbilBisnis: TButton;
+    Panel3: TPanel;
+    selanjutnya: TLabel;
+    Label4: TLabel;
+    Label1: TLabel;
+    Panel4: TPanel;
     procedure FormCreate(Sender: TObject);
-    procedure Button3Click(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
-    procedure Button4Click(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
+    procedure AmbilPersonalClick(Sender: TObject);
+    procedure Panggil1Click(Sender: TObject);
+    procedure AmbilBisnisClick(Sender: TObject);
+    procedure Panggil2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -61,14 +66,6 @@ begin
   anakKanan:=(2*i)+1;
 end;
 
-function cekLeaf(i:integer):boolean;
-begin
-  if (i >= (bantrian/2)) and (i <= bantrian) then
-    cekLeaf:=true
-  else
-    cekLeaf:=false;
-end;
-
 procedure tukar(i:integer; j:integer);
 var
   temp:string;
@@ -80,7 +77,7 @@ end;
 
 procedure heap(i:integer);
 begin
-  if (not cekLeaf(i)) then
+  if (i <= (bantrian/2)) and (i <= bantrian) then
   begin
     if (antrian[i] > antrian[anakKiri(i)]) or (antrian[i] > antrian[anakKanan(i)]) then
     begin
@@ -101,25 +98,22 @@ end;
 procedure shiftUp;
 var
   i:integer;
-  y:string;
+  temp:string;
 
 begin
   i:=bantrian;
   while(i > 1) and (antrian[i div 2] > antrian[i]) do
   begin
-    y := antrian[i];
+    temp := antrian[i];
     antrian[i]:= antrian[i div 2];
-    antrian[i div 2]:=y;
+    antrian[i div 2]:=temp;
     i:=i div 2;
   end;
 end;
 
-procedure tambahData(data:string);
-var
-  current:integer;
+procedure tambahAntrian(data:string);
 begin
     antrian[bantrian+1]:=data;
-    current:=bantrian;
     bantrian:=bantrian+1;
     shiftUp;
 end;
@@ -127,7 +121,6 @@ end;
 procedure reorganisasi;
 var
   i:integer;
-  tengah:integer;
 begin
   i:=bantrian div 2;
   while(i >= 1)do
@@ -144,81 +137,163 @@ begin
    data:=antrian[1];
    antrian[1]:=antrian[bantrian];
    bantrian:=bantrian-1;
-   //buatHeap(1);
-   //siftDown(1);
    reorganisasi;
    ambil:=data;
 end;
 
+function terbilang(x:longint):string;
+function bilang(x:longint):string;
+begin
+     case x of
+     0:bilang:='';
+     1:bilang:='satu';
+     2:bilang:='dua';
+     3:bilang:='tiga';
+     4:bilang:='empat';
+     5:bilang:='lima';
+     6:bilang:='enam';
+     7:bilang:='tujuh';
+     8:bilang:='delapan';
+     9:bilang:='sembilan';
+     10:bilang:='sepuluh';
+     11:bilang:='sebelas';
+     end;
+end;
 
-procedure TForm1.Button3Click(Sender: TObject);
+begin
+     if x<12 then
+     terbilang := ' ' + bilang(x)
+
+     else if x<20 then
+     terbilang:=terbilang(x-10)+'belas'
+
+     else if x<100 then
+     terbilang:=terbilang(x div 10)+'puluh'+terbilang(x mod 10)
+     else if x<200 then
+     terbilang:='seratus'+terbilang(x-100)
+     else if x<1000 then
+     terbilang:=terbilang(x div 100)+'ratus'+terbilang(x mod 100)
+     else if x<2000 then
+     terbilang:='seribu'+terbilang(x-1000)
+     else if x<1000000 then
+     terbilang:=terbilang(x div 1000)+'ribu'+terbilang(x mod 1000)
+     else if x<1000000000 then
+     terbilang:=terbilang(x div 1000000)+'juta'+terbilang(x mod 1000000)
+     else
+     terbilang:=terbilang(x div 1000000000)+'milyar'+terbilang(x mod 1000000000);
+end;
+
+
+
+procedure TForm1.AmbilPersonalClick(Sender: TObject);
 var
-  urut:string;
+  noAntri:string;
+  i:integer;
 begin
   if(bantrian = 0) then
   begin
-    antrian[1]:='P001';
-    bantrian:=1;
-    ShowMessage('Nomor antrian anda : P001');
+    noAntri:='P'+Format('%.3d', [bantrian+1]);  //%.3d format 3 angka desimal (integer)
+    tambahAntrian(noAntri);
+    ShowMessage('Nomor antrian anda : '+noAntri);
+    selanjutnya.Caption:=antrian[1];
   end
   else
   begin
-    urut:='P'+Format('%.3d', [bantrian+1]);
-    tambahData(urut);
-    ShowMessage('Nomor antrian anda : '+urut);
+    noAntri:='P'+Format('%.3d', [bantrian+1]);  //%.3d format 3 angka desimal (integer)
+    tambahAntrian(noAntri);
+    ShowMessage('Nomor antrian anda : '+noAntri);
+    for i:=1 to bantrian do
+      selanjutnya.Caption:=antrian[i-(i-1)];
   end;
 end;
 
-procedure TForm1.Button1Click(Sender: TObject);
+procedure TForm1.Panggil1Click(Sender: TObject);
 var
-  kode:string;
+  nomor:string;
+  i:integer;
+  namafile:string;
 begin
   if(bantrian = 0) then
   begin
-    ShowMessage('Antrian kosong!');
-    meja1.Caption:='0';
-    meja2.Caption:='0';
+    ShowMessage('Tidak ada antrian!');
+    meja1.Caption:='-';
+    meja2.Caption:='-';
   end
   else
   begin
-    kode:=ambil;
-    meja1.Caption:=kode;
+    nomor:=ambil;
+    meja1.Caption:=nomor;
+    for i:=1 to bantrian do
+      selanjutnya.Caption:=antrian[i-(i-1)];
+      if bantrian=0 then
+        selanjutnya.Caption:='-';
+
+    playsound('C:\audionumbers\nomor-urut.wav',0,0);
+    for i:=1 to length(nomor) do
+    begin
+      namafile:='C:\audionumbers\'+copy(nomor,i,1)+'.wav';
+      playsound(pchar(namafile),0,0);
+    end;
+    playsound('C:\audionumbers\loket.wav',0,0);
+    playsound('C:\audionumbers\1.wav',0,0);
   end;
 end;
 
-procedure TForm1.Button4Click(Sender: TObject);
+procedure TForm1.AmbilBisnisClick(Sender: TObject);
 var
-  urut:string;
+  noAntri:string;
+  i:integer;
 begin
   if(bantrian = 0) then
   begin
     antrian[1]:='B001';
     bantrian:=1;
     ShowMessage('Nomor antrian anda : B001');
+    selanjutnya.Caption:='B001';
   end
   else
   begin
-    urut:='B'+Format('%.3d', [bantrian+1]);
-    tambahData(urut);
-    ShowMessage('Nomor antrian anda : '+urut);
+    noAntri:='B'+Format('%.3d', [bantrian+1]);
+    tambahAntrian(noAntri);
+    ShowMessage('Nomor antrian anda : '+noAntri);
+    for i:=1 to bantrian do
+      selanjutnya.Caption:=antrian[i-(i-1)];
   end;
 end;
 
 
-procedure TForm1.Button2Click(Sender: TObject);
+procedure TForm1.Panggil2Click(Sender: TObject);
 var
-  kode:string;
+  nomor:string;
+  i:integer;
+  namafile:string;
 begin
   if(bantrian = 0) then
   begin
-    ShowMessage('Antrian kosong!');
-    meja1.Caption:='0';
-    meja2.Caption:='0';
+    ShowMessage('Tidak ada antrian!');
+    meja1.Caption:='-';
+    meja2.Caption:='-';
+    selanjutnya.Caption:='-';
   end
   else
   begin
-    kode:=ambil;
-    meja2.Caption:=kode;
+    nomor:=ambil;
+    meja2.Caption:=nomor;
+    for i:=1 to bantrian do
+      selanjutnya.Caption:=antrian[i-(i-1)];
+      if bantrian=0 then
+        selanjutnya.Caption:='-';
+
+    playsound('C:\audionumbers\nomor-urut.wav',0,0);
+    for i:=1 to length(nomor) do
+    begin
+      namafile:='C:\audionumbers\'+copy(nomor,i,1)+'.wav';
+      playsound(pchar(namafile),0,0);
+    end;
+    playsound('C:\audionumbers\loket.wav',0,0);
+    playsound('C:\audionumbers\2.wav',0,0);
   end;
 end;
+
+
 end.
