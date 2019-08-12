@@ -1,7 +1,7 @@
 object Form1: TForm1
-  Left = 282
-  Top = 147
-  Width = 611
+  Left = 280
+  Top = 176
+  Width = 524
   Height = 463
   Caption = 'ProgramAntrianPrioritas'
   Color = clWhite
@@ -50,7 +50,7 @@ object Form1: TForm1
       Left = 46
       Top = 80
       Width = 73
-      Height = 25
+      Height = 27
       Alignment = taCenter
       Caption = 'MEJA 1'
       Color = clHighlight
@@ -100,7 +100,7 @@ object Form1: TForm1
       Left = 46
       Top = 80
       Width = 77
-      Height = 25
+      Height = 27
       Caption = 'MEJA 2'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -200,7 +200,7 @@ object Form1: TForm1
     object Label4: TLabel
       Left = 18
       Top = 85
-      Width = 135
+      Width = 137
       Height = 18
       Alignment = taCenter
       Caption = 'Antrian Selanjutnya'

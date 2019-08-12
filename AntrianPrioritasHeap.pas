@@ -70,12 +70,12 @@ procedure tukar(i:integer; j:integer);
 var
   temp:string;
 begin
-  temp:=antrian[i];
-  antrian[i]:=antrian[j];
-  antrian[j]:=temp;
+  temp := antrian[i];
+  antrian[i]:= antrian[j];
+  antrian[j]:= temp;
 end;
 
-procedure heap(i:integer);
+procedure heap(i:integer); // Menggunakan Algoritma Min Heap ( nilai paling kecil selalu di root )
 begin
   if (i <= (bantrian/2)) and (i <= bantrian) then
   begin
@@ -95,34 +95,34 @@ begin
   end;
 end;
 
-procedure shiftUp;
+procedure shiftUp;   // Algoritma Shift-Up
 var
-  i:integer;
-  temp:string;
+  i: integer;
+  temp: string;
 
 begin
-  i:=bantrian;
+  i:= bantrian;
   while(i > 1) and (antrian[i div 2] > antrian[i]) do
   begin
     temp := antrian[i];
-    antrian[i]:= antrian[i div 2];
-    antrian[i div 2]:=temp;
+    antrian[i]:= antrian[i div 2]; // Tukarkan nilai node dengan nilai parent
+    antrian[i div 2]:= temp;
     i:=i div 2;
   end;
 end;
 
-procedure tambahAntrian(data:string);
+procedure tambahAntrian(data:string); // Algoritma penyisipan data
 begin
-    antrian[bantrian+1]:=data;
-    bantrian:=bantrian+1;
-    shiftUp;
+    antrian[bantrian+1]:= data; // Simpan elemen setelah data paling akhir
+    bantrian:= bantrian+1;      // Banyak simpil ditambah 1
+    shiftUp;                    // Lakukan reorganisasi (Shift-Up)
 end;
 
 procedure reorganisasi;
 var
   i:integer;
 begin
-  i:=bantrian div 2;
+  i:= bantrian div 2;
   while(i >= 1)do
   begin
       heap(i);
@@ -130,15 +130,17 @@ begin
   end;
 end;
 
-function ambil:string;
+function ambil:string;   // Algoritma penghapusan data
 var
   data:string;
+  i:integer;
 begin
-   data:=antrian[1];
-   antrian[1]:=antrian[bantrian];
-   bantrian:=bantrian-1;
-   reorganisasi;
-   ambil:=data;
+   i:=1;
+   data:= antrian[i];  // Ambil nilai Heap
+   antrian[i]:= antrian[bantrian]; // Ambil nilai node paling akhir dan jadikan nilai root
+   bantrian:= bantrian-i; // Banyak simpil dikurang 1
+   reorganisasi; // Lakukan proses reorganisasi heap
+   ambil:= data;
 end;
 
 function terbilang(x:longint):string;
@@ -190,21 +192,11 @@ var
   noAntri:string;
   i:integer;
 begin
-  if(bantrian = 0) then
-  begin
-    noAntri:='P'+Format('%.3d', [bantrian+1]);  //%.3d format 3 angka desimal (integer)
-    tambahAntrian(noAntri);
-    ShowMessage('Nomor antrian anda : '+noAntri);
-    selanjutnya.Caption:=antrian[1];
-  end
-  else
-  begin
     noAntri:='P'+Format('%.3d', [bantrian+1]);  //%.3d format 3 angka desimal (integer)
     tambahAntrian(noAntri);
     ShowMessage('Nomor antrian anda : '+noAntri);
     for i:=1 to bantrian do
       selanjutnya.Caption:=antrian[i-(i-1)];
-  end;
 end;
 
 procedure TForm1.Panggil1Click(Sender: TObject);
@@ -228,14 +220,14 @@ begin
       if bantrian=0 then
         selanjutnya.Caption:='-';
 
-    playsound('C:\audionumbers\nomor-urut.wav',0,0);
+    playsound('C:\audionumbers\nomor-antrian.wav',0,0);
     for i:=1 to length(nomor) do
     begin
       namafile:='C:\audionumbers\'+copy(nomor,i,1)+'.wav';
       playsound(pchar(namafile),0,0);
     end;
-    playsound('C:\audionumbers\loket.wav',0,0);
-    playsound('C:\audionumbers\1.wav',0,0);
+    playsound('C:\audionumbers\silahkan.wav',0,0);
+    playsound('C:\audionumbers\meja1.wav',0,0);
   end;
 end;
 
@@ -244,21 +236,11 @@ var
   noAntri:string;
   i:integer;
 begin
-  if(bantrian = 0) then
-  begin
-    antrian[1]:='B001';
-    bantrian:=1;
-    ShowMessage('Nomor antrian anda : B001');
-    selanjutnya.Caption:='B001';
-  end
-  else
-  begin
-    noAntri:='B'+Format('%.3d', [bantrian+1]);
+    noAntri:='B'+Format('%.3d', [bantrian+1]);   // %.3d format 3 angka desimal (integer)
     tambahAntrian(noAntri);
     ShowMessage('Nomor antrian anda : '+noAntri);
     for i:=1 to bantrian do
       selanjutnya.Caption:=antrian[i-(i-1)];
-  end;
 end;
 
 
@@ -281,17 +263,17 @@ begin
     meja2.Caption:=nomor;
     for i:=1 to bantrian do
       selanjutnya.Caption:=antrian[i-(i-1)];
-      if bantrian=0 then
+      if (bantrian = 0) then
         selanjutnya.Caption:='-';
 
-    playsound('C:\audionumbers\nomor-urut.wav',0,0);
+    playsound('C:\audionumbers\nomor-antrian.wav',0,0);
     for i:=1 to length(nomor) do
     begin
       namafile:='C:\audionumbers\'+copy(nomor,i,1)+'.wav';
       playsound(pchar(namafile),0,0);
     end;
-    playsound('C:\audionumbers\loket.wav',0,0);
-    playsound('C:\audionumbers\2.wav',0,0);
+    playsound('C:\audionumbers\silahkan.wav',0,0);
+    playsound('C:\audionumbers\meja2.wav',0,0);
   end;
 end;
 
