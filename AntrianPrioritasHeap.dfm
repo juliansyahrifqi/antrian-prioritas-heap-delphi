@@ -1,7 +1,7 @@
 object Form1: TForm1
   Left = 280
   Top = 176
-  Width = 524
+  Width = 628
   Height = 463
   Caption = 'ProgramAntrianPrioritas'
   Color = clWhite

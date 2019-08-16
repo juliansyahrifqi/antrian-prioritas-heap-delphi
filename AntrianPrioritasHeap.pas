@@ -220,14 +220,14 @@ begin
       if bantrian=0 then
         selanjutnya.Caption:='-';
 
-    playsound('C:\audionumbers\nomor-antrian.wav',0,0);
+    playsound('C:\Program Files (x86)\Borland\Delphi7\Projects\AntrianPrioritasHeapDelphi\audionumbers\nomor-antrian.wav',0,0);
     for i:=1 to length(nomor) do
     begin
-      namafile:='C:\audionumbers\'+copy(nomor,i,1)+'.wav';
+      namafile:='C:\Program Files (x86)\Borland\Delphi7\Projects\AntrianPrioritasHeapDelphi\audionumbers\'+copy(nomor,i,1)+'.wav';
       playsound(pchar(namafile),0,0);
     end;
-    playsound('C:\audionumbers\silahkan.wav',0,0);
-    playsound('C:\audionumbers\meja1.wav',0,0);
+    playsound('C:\Program Files (x86)\Borland\Delphi7\Projects\AntrianPrioritasHeapDelphi\audionumbers\silahkan.wav',0,0);
+    playsound('C:\Program Files (x86)\Borland\Delphi7\Projects\AntrianPrioritasHeapDelphi\audionumbers\meja1.wav',0,0);
   end;
 end;
 
@@ -266,14 +266,14 @@ begin
       if (bantrian = 0) then
         selanjutnya.Caption:='-';
 
-    playsound('C:\audionumbers\nomor-antrian.wav',0,0);
+    playsound('C:\Program Files (x86)\Borland\Delphi7\Projects\AntrianPrioritasHeapDelphi\audionumbers\nomor-antrian.wav',0,0);
     for i:=1 to length(nomor) do
     begin
       namafile:='C:\audionumbers\'+copy(nomor,i,1)+'.wav';
       playsound(pchar(namafile),0,0);
     end;
-    playsound('C:\audionumbers\silahkan.wav',0,0);
-    playsound('C:\audionumbers\meja2.wav',0,0);
+    playsound('C:\Program Files (x86)\Borland\Delphi7\Projects\AntrianPrioritasHeapDelphi\audionumbers\silahkan.wav',0,0);
+    playsound('C:\Program Files (x86)\Borland\Delphi7\Projects\AntrianPrioritasHeapDelphi\audionumbers\meja2.wav',0,0);
   end;
 end;
 
